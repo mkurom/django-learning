@@ -41,6 +41,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'polls.apps.PollsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -91,6 +92,9 @@ DATABASES = {
         'PASSWORD': 'password',
         'HOST': 'db',
         'PORT': 3306,
+        'TEST': {
+            'MIRROR': "default",
+        },
     }
 }
 
