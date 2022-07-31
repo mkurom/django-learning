@@ -11,6 +11,12 @@ https://docs.djangoproject.com/en/4.0/intro/tutorial01/
 `docker-compose run web django-admin startproject プロジェクト名 .`
 `docker-compose run web django-admin startproject my_project .`
 
+
+# アプリの追加
+
+`python manage.py startapp アプリ名`
+`python manage.py startapp products`
+
 # DB設定
 
 projectDIR/settings.pyの修正
@@ -31,6 +37,12 @@ docker-compose.ymlで設定したNAMEやUSERなどと異なると、`ERR_EMPTY_R
 # MySqlに接続(コンテナに入っている状態で入力)
 `mysql -h 127.0.0.1 -P 3306 -u root -p`
 ※パスはMYSQL_ROOT_PASSWORDで設定したパスワード
+
+# モデルの変更
+
+`python manage.py makemigrations`
+
+`python manage.py migrate`
 
 # パッケージインストール
 ※要確認
