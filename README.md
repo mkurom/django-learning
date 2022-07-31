@@ -2,6 +2,9 @@
 
 https://docs.djangoproject.com/en/4.0/
 
+# 教材
+
+https://docs.djangoproject.com/en/4.0/intro/tutorial01/
 
 # djangoプロジェクト作成
 
@@ -19,11 +22,21 @@ docker-compose.ymlで設定したNAMEやUSERなどと異なると、`ERR_EMPTY_R
 
 `docker-compose up -d`
 
+# dockerコンテナに入る(実行中のコンテナでコマンドを実行する)
+`docker-compose exec web bash`
+
+# コンテナから抜ける
+`exit`
+
+# MySqlに接続(コンテナに入っている状態で入力)
+`mysql -h 127.0.0.1 -P 3306 -u root -p`
+※パスはMYSQL_ROOT_PASSWORDで設定したパスワード
+
 # パッケージインストール
+※要確認
 
 ## requirements.txtを更新する場合
 
-webコンテナでpython3 pip installを実行する
 `docker-compose run web python3 pip install -r requirements.txt`
 
 ## requirements.txtを更新しない場合
