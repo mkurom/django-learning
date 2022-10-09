@@ -14,13 +14,20 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
 
 
+# memo: products/dummy/にアクセスすると、GET, POSTメソッドが確認できる
+# クラスベースビュー
 class ProductDummyApiView(APIView):
-
     def get(self, request, format=None):
         # ダミーデータを返却
-        return Response({"name": "DUMMY!"})
+        return Response({"name": "GET Respose DUMMY!"})
+
+    def post(self, request):
+        return Response({"name": "POST Respose DUMMY!"})
+
+product_dummy_api_view = ProductDummyApiView.as_view()
 
 
+# 関数ベースビュー
 @api_view(['GET'])
 def product_list(request):
 
