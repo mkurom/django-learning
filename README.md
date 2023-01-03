@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.0/intro/tutorial01/
 `docker-compose run web django-admin startproject プロジェクト名 .`
 `docker-compose run web django-admin startproject my_project .`
 
-
 # アプリの追加
 
 `python manage.py startapp アプリ名`
@@ -40,9 +39,19 @@ docker-compose.ymlで設定したNAMEやUSERなどと異なると、`ERR_EMPTY_R
 
 # モデルの変更
 
+## migrationファイルを作る
 `python manage.py makemigrations`
-
+## migrationファイルを元にDBに反映する
 `python manage.py migrate`
+
+- 個別に実行する場合
+
+`python manage.py makemigrations アプリ名`
+`python manage.py makemigrations products`
+
+`python manage.py migrate アプリ名`
+`python manage.py migrate products`
+
 
 # パッケージインストール
 ※要確認
@@ -61,3 +70,14 @@ requirements.txtを更新して以下のコマンドを実行
 # アクセス
 
 http://127.0.0.1:8000
+
+
+### pj中身
+
+my_project : startprojectで作成したdjango プロジェクト
+polls : startappで作成したチュートリアルアプリ
+products : startappで作成したDjango REST frameworkのアプリ（API）
+snippets : startappで作成したアプリ(実践Djangoのアプリ)
+
+### スーパーユーザー、DBログイン
+.envを確認
