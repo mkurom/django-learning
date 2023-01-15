@@ -6,14 +6,19 @@ https://docs.djangoproject.com/en/4.0/
 
 https://docs.djangoproject.com/en/4.0/intro/tutorial01/
 
+### 実践Django
+https://www.shoeisha.co.jp/book/detail/9784798153964
+
 # djangoプロジェクト作成
 
 `docker-compose run web django-admin startproject プロジェクト名 .`
+
 `docker-compose run web django-admin startproject my_project .`
 
 # アプリの追加
 
 `python manage.py startapp アプリ名`
+
 `python manage.py startapp products`
 
 # DB設定
@@ -41,17 +46,36 @@ docker-compose.ymlで設定したNAMEやUSERなどと異なると、`ERR_EMPTY_R
 
 ## migrationファイルを作る
 `python manage.py makemigrations`
-## migrationファイルを元にDBに反映する
+## migrationファイルを元にDBに反映する(テーブル作成)
 `python manage.py migrate`
 
 - 個別に実行する場合
 
 `python manage.py makemigrations アプリ名`
+
 `python manage.py makemigrations products`
 
 `python manage.py migrate アプリ名`
+
 `python manage.py migrate products`
 
+# testの書き方
+`python manage.py test`
+
+- 特定のアプリケーションで実行する場合
+`python manage.py test アプリ名`
+
+`python manage.py test polls`
+
+- 特定のアプリの特定のクラスのテスト
+`python manage.py test アプリ名.tests.クラス名`
+
+`python manage.py test polls.tests.QuestionModelTests`
+
+- 特定のアプリの特定のクラスメソッドのテスト
+`python manage.py test アプリ名.tests.クラス名.メソッド名`
+
+`python manage.py test polls.tests.QuestionModelTests.test_was_published_recently_with_future_question`
 
 # パッケージインストール
 ※要確認
@@ -62,9 +86,11 @@ docker-compose.ymlで設定したNAMEやUSERなどと異なると、`ERR_EMPTY_R
 
 ## requirements.txtを更新しない場合
 `docker-compose exec web pip install パッケージ名`
+
 `docker-compose exec web pip install requests`
 
 requirements.txtを更新して以下のコマンドを実行
+
 `docker-compose build --no-cache`
 
 # アクセス
