@@ -37,6 +37,30 @@ class TopPageRenderSnippets(TestCase):
     response = top(request)
     self.assertContains(response, self.user.username)
 
+class SnippetsDetailTest(TestCase):
+
+  def setUp(self):
+    self.user = UserModel.objects.create(
+      username = "test_user",
+      email = "test@example.com",
+      password = "top_select_pass001",
+    )
+
+    self.snippet = Snippet.objects.create(
+      title = "title1",
+      code = "print('hello')",
+      description = "description1",
+      created_by = self.user,
+    )
+
+  def test_should_use_expected_template(self):
+    response = self.client.get("/snippets/%s/" % self.snippet.id)
+    self.assertTemplateUsed(response, "snippets/snippet_detail.html")
+
+  def test_top_page_return_200_and_expected_heading(self):
+    response = self.client.get("/snippets/%s/" % self.snippet.id)
+    self.assertContains(response, self.snippet.title, status_code=200)
+
 # class TopPageViewTest(TestCase):
 
 #   def test_top_returns_200(self):
