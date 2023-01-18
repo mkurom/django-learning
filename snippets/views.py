@@ -1,10 +1,15 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
+from snippets.models import Snippet
+
 def top(request):
 
+  snippets = Snippet.objects.all()
+  context = {"snippets": snippets}
+  
   # templateを返す
-  return render(request, "snippets/top.html")
+  return render(request, "snippets/top.html", context)
 
   # httpレスポンスを返す
   # return HttpResponse(b"Hello World")
