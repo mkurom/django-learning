@@ -1,0 +1,35 @@
+# ワークフローの名称
+name: Docker Image CI
+
+# event設定
+on:
+  # push, pull_requestのeventをトリガーにして、jobsを実行する
+  push:
+    # event(ここではmpush)を実行するブランチ
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+# onで設定したevent, ブランチに対して実行するjob
+jobs:
+  # job名
+  build:
+    # jobを実行する仮想環境
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set Up Python3
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          architecture: x64
+      - name: Install Python Packages
+        run: pip3 install -r requirements.txt
+      - name: Start Docker Compose
+        run: docker-compose up -d
+#       - name: Check Code Format
+#         run: tox -e flake8
+#       - name: Unit Test
+#         run: tox -e testapp
