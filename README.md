@@ -38,6 +38,10 @@ docker-compose.ymlで設定したNAMEやUSERなどと異なると、`ERR_EMPTY_R
 # コンテナから抜ける
 `exit`
 
+# Dockerfile や docker-compose.ymlを更新したい場合
+
+`docker-compose up -d --build`
+
 # MySqlに接続(コンテナに入っている状態で入力)
 `mysql -h 127.0.0.1 -P 3306 -u root -p`
 ※パスはMYSQL_ROOT_PASSWORDで設定したパスワード
@@ -78,11 +82,15 @@ docker-compose.ymlで設定したNAMEやUSERなどと異なると、`ERR_EMPTY_R
 `python manage.py test polls.tests.QuestionModelTests.test_was_published_recently_with_future_question`
 
 # パッケージインストール
-※要確認
 
 ## requirements.txtを更新する場合
 
-`docker-compose run web python3 pip install -r requirements.txt`
+~~`docker-compose run web python3 pip install -r requirements.txt`~~
+
+Dockerfileでrequirements.txtを読み込んでいるので、requirements.txtを変更した後、
+コンテナを立ち上げるときに下記コマンドを実行すれば良い
+
+`docker-compose up -d --build`
 
 ## requirements.txtを更新しない場合
 `docker-compose exec web pip install パッケージ名`
