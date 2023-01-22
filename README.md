@@ -92,14 +92,15 @@ Dockerfileでrequirements.txtを読み込んでいるので、requirements.txt�
 
 `docker-compose up -d --build`
 
+<!-- requirements.txtを更新して以下のコマンドを実行
+
+`docker-compose build --no-cache` -->
+
+
 ## requirements.txtを更新しない場合
 `docker-compose exec web pip install パッケージ名`
 
 `docker-compose exec web pip install requests`
-
-requirements.txtを更新して以下のコマンドを実行
-
-`docker-compose build --no-cache`
 
 # アクセス
 
