@@ -28,16 +28,31 @@ def snippet_new(request):
 
       return redirect(snippet_detail, snippet_id = snippet.pk)
     
-    else:
-      form = SnippetForm()
+  else:
+    form = SnippetForm()
 
-    return render(request, "snippets/snippet_new.html", {'form': form})
+  return render(request, "snippets/snippet_new.html", {'form': form})
 
 
   # return HttpResponse('スニペットの登録')
 
-def snippet_edit(request):
-  return HttpResponse('スニペットの編集')
+@login_required
+def snippet_edit(request, snippet_id):
+  snippet = get_object_or_404(Snippet, pk = snippet_id)
+  if snippet.created_by_id != request.user.id:
+    return HttpResponseForbidden("このスニペットの編集は許可されていません。")
+
+  if request.method == "POST":
+    form = SnippetForm(request.POST, instance = snippet)
+    if form.is_valid():
+      form.save()
+      return redirect('snippet_detail', snippet_id = snippet_id)
+  else:
+    form = SnippetForm(instance = snippet)
+
+  return render(request, 'snippets/snippet_edit.html', {'form': form})
+
+  # return HttpResponse('スニペットの編集')
 
 def snippet_detail(request, snippet_id):
   snippet = get_object_or_404(Snippet, pk = snippet_id)
