@@ -1,10 +1,13 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.viewsdecorators.http import require_safe, require_http_methods
 
 from snippets.models import Snippet
 from snippets.forms import SnippetForm
 
+# require_safeデコレータ：viewsがGET, HEADメソッドのみ受け入れる
+@require_safe
 def top(request):
 
   snippets = Snippet.objects.all()
@@ -17,7 +20,9 @@ def top(request):
   # return HttpResponse(b"Hello World")
 
 # login_requiredはユーザーログインが必要なことを示すデコレータ
+# require_http_methodsデコレータ：指定したリクエストのみ受け入れる
 @login_required
+@require_http_methods(["GET", "POST", "HEAD"])
 def snippet_new(request):
   if request.method == 'POST':
     form = SnippetForm(request.POST)
