@@ -13,3 +13,8 @@ class Snippet(models.Model):
 
   def __str__(self) -> str:
     return self.title
+
+  # djangoアプリケーションで定義したモデルのテーブル名は「アプリ名_クラス名」になるので、snippets_snippetになる
+  # Metaクラスでdb_tableを設定すると、テーブル名が変更できる
+  class Meta:
+    db_table = 'snippets'
