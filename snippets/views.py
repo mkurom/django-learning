@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from django.viewsdecorators.http import require_safe, require_http_methods
+from django.views.decorators.http import require_safe, require_http_methods
 
 from snippets.models import Snippet
 from snippets.forms import SnippetForm
