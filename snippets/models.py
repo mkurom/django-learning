@@ -5,7 +5,9 @@ class Snippet(models.Model):
 
   title = models.CharField('title', max_length=128)
   code = models.TextField('code', blank=True)
-  description = models.TextField('description', blank=True)
+  # 空文字とnullが混在している
+  # description = models.TextField('description', blank=True)
+  description = models.TextField('description', null=False, default="", blank=True)
   created_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="投稿者", on_delete=models.CASCADE)
   
   created_at = models.DateTimeField("投稿日", auto_now_add=True)
