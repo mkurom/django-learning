@@ -50,6 +50,7 @@ docker-compose.ymlで設定したNAMEやUSERなどと異なると、`ERR_EMPTY_R
 
 ## migrationファイルを作る
 `python manage.py makemigrations`
+
 ## migrationファイルを元にDBに反映する(テーブル作成)
 `python manage.py migrate`
 
@@ -62,6 +63,12 @@ docker-compose.ymlで設定したNAMEやUSERなどと異なると、`ERR_EMPTY_R
 `python manage.py migrate アプリ名`
 
 `python manage.py migrate products`
+
+- 生成されたマイグレーションファイルから生成されるSQLを確認する
+`python manage.py sqlmigrate アプリラベル マイグレーションネーム`
+
+`python manage.py sqlmigrate snippets 0001_initial`
+
 
 # testの書き方
 `python manage.py test`
