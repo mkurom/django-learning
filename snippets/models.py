@@ -7,6 +7,17 @@ class  DraftSnippetManager(models.Manager):
   def get_queryset(self):
     return super().get_queryset().filter(is_draft=True)
 
+# QuetySetのカスタマイズ
+class SnippetQuerySet(models.QuerySet):
+  def draft(self):
+    return self.filter(is_draft= False)
+  
+  def recent_update(self):
+    return self.order_by("-updated_at")
+  
+  # ecent_updateはSnippetQuerySetクラスからしか呼べない（プライベートメソッド）
+  recent_update.queryset_only = True 
+
 class Snippet(models.Model):
 
   title = models.CharField('title', max_length=128)
