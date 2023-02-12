@@ -3,7 +3,7 @@ from django.db import models
 
 
 # モデルマネージャーのカスタマイズ
-class  DraftSnippetManager(models.Manager):
+class DraftSnippetManager(models.Manager):
   def get_queryset(self):
     return super().get_queryset().filter(is_draft=True)
 
@@ -34,9 +34,12 @@ class Snippet(models.Model):
 
   # モデルマネージャーのカスタマイズ時のobjectsの呼び出し
   # objects = models.Manager
+  # draft = DraftSnippetManager()
   # QuerySetのカスタマイズ時のobjectsの呼び出し
-  objects = SnippetQuerySet.as_manager
-  draft = DraftSnippetManager()
+  # objects = SnippetQuerySet.as_manager
+
+  # モデルマネージャーとQuerySetのどちらもカスタマイズした時のobjectsの呼び出し
+  objects = DraftSnippetManager.from_queryset(SnippetQuerySet)()
 
   # djangoアプリケーションで定義したモデルのテーブル名は「アプリ名_クラス名」になるので、snippets_snippetになる
   # Metaクラスでdb_tableを設定すると、テーブル名が変更できる
