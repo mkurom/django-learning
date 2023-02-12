@@ -1,6 +1,23 @@
 from django.conf import settings
 from django.db import models
 
+
+# モデルマネージャーのカスタマイズ
+class DraftSnippetManager(models.Manager):
+  def get_queryset(self):
+    return super().get_queryset().filter(is_draft=True)
+
+# QuetySetのカスタマイズ
+class SnippetQuerySet(models.QuerySet):
+  def draft(self):
+    return self.filter(is_draft= False)
+  
+  def recent_update(self):
+    return self.order_by("-updated_at")
+  
+  # ecent_updateはSnippetQuerySetクラスからしか呼べない（プライベートメソッド）
+  recent_update.queryset_only = True 
+
 class Snippet(models.Model):
 
   title = models.CharField('title', max_length=128)
@@ -12,6 +29,17 @@ class Snippet(models.Model):
   
   created_at = models.DateTimeField("投稿日", auto_now_add=True)
   updated_at = models.DateTimeField("更新日", auto_now=True)
+
+  is_draft = models.BooleanField(_('Draft'), default=True)
+
+  # モデルマネージャーのカスタマイズ時のobjectsの呼び出し
+  # objects = models.Manager
+  # draft = DraftSnippetManager()
+  # QuerySetのカスタマイズ時のobjectsの呼び出し
+  # objects = SnippetQuerySet.as_manager
+
+  # モデルマネージャーとQuerySetのどちらもカスタマイズした時のobjectsの呼び出し
+  objects = DraftSnippetManager.from_queryset(SnippetQuerySet)()
 
   # djangoアプリケーションで定義したモデルのテーブル名は「アプリ名_クラス名」になるので、snippets_snippetになる
   # Metaクラスでdb_tableを設定すると、テーブル名が変更できる
