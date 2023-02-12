@@ -1,6 +1,12 @@
 from django.conf import settings
 from django.db import models
 
+
+# モデルマネージャーのカスタマイズ
+class  DraftSnippetManager(models.Manager):
+  def get_queryset(self):
+    return super().get_queryset().filter(is_draft=True)
+
 class Snippet(models.Model):
 
   title = models.CharField('title', max_length=128)
@@ -12,6 +18,11 @@ class Snippet(models.Model):
   
   created_at = models.DateTimeField("投稿日", auto_now_add=True)
   updated_at = models.DateTimeField("更新日", auto_now=True)
+
+  is_draft = models.BooleanField(_('Draft'), default=True)
+
+  objects = models.Manager
+  draft = DraftSnippetManager()
 
   # djangoアプリケーションで定義したモデルのテーブル名は「アプリ名_クラス名」になるので、snippets_snippetになる
   # Metaクラスでdb_tableを設定すると、テーブル名が変更できる
