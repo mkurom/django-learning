@@ -32,7 +32,10 @@ class Snippet(models.Model):
 
   is_draft = models.BooleanField(_('Draft'), default=True)
 
-  objects = models.Manager
+  # モデルマネージャーのカスタマイズ時のobjectsの呼び出し
+  # objects = models.Manager
+  # QuerySetのカスタマイズ時のobjectsの呼び出し
+  objects = SnippetQuerySet.as_manager
   draft = DraftSnippetManager()
 
   # djangoアプリケーションで定義したモデルのテーブル名は「アプリ名_クラス名」になるので、snippets_snippetになる
