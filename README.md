@@ -33,7 +33,14 @@ docker-compose.ymlで設定したNAMEやUSERなどと異なると、`ERR_EMPTY_R
 `docker-compose up -d`
 
 # dockerコンテナに入る(実行中のコンテナでコマンドを実行する)
-`docker-compose exec web bash`
+`docker-compose exec web bash`ならdocker-compose.yamlで指定したdjangoのコンテナに入る
+
+→localhost、管理サイトにアクセスできる
+
+`docker-compose exec db bash`ならdocker-compose.yamlで指定したdbのコンテナに入る
+
+→sql文が実行できる
+
 
 # コンテナから抜ける
 `exit`

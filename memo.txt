@@ -1,0 +1,50 @@
+# Django REST frameworkのそれぞれの役割
+
+models テーブルの定義
+views フロント側とのリクエスト形式(GET,POST,PUT…)を定義
+urls APIにアクセスするパスの設定
+serializer フロントから受け取ったデータをサーバー側で利用しやすくするように加工する
+
+
+# リクエストを受信してからの流れ
+
+・urls.pyのrouter.registerにアクセス(GETやPOSTなど)
+・views.pyの指定の関数が呼ばれる（getメソッドdef get()を定義しておく）
+・内部でフィルターやリクエストのパラメータによって処理を行いレスポンスを返す
+・レスポンスの中身を変更するときはserializer.pyを修正する
+
+
+# model
+
+・objectsはマネージャーと呼ばれている
+・objectsはQuerySetオブジェクトを返す
+  →QuerySetオブジェクトはデータベースから取り出したデータから用意したクラスのオブジェクトを管理している
+
+
+# QuerySet
+
+・カスタマイズ方法
+  →
+
+
+# Serializer
+
+・モデルとAPI のデータ(json なと)間での相互変換を受け持つものであり、モデルを API のデータに変換したり、逆に API のデータをモデルに変換する
+
+
+# ViewSet
+
+・ViewSetはコントローラーの役割
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+# apiの入り口
+
+・作成したappのurls.pyに記載されている以下のようなrouterが該当する
+
+ex)users一覧取得api
+
+router = routers.DefaultRouter()
+router.register('users', UserViewSet)
+
+
